@@ -1,17 +1,26 @@
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { actions } from '../slices/todosSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions, todoSelector } from '../slices/todosSlice';
 
 function AddTodo() {
   const dispatch = useDispatch();
+  const todos = useSelector(todoSelector.selectAll);
 
-  const inputRef = useRef('');
-
+  const inputRef = useRef();
   const handleSubmit = (e) => {
     e.preventDefault();
-    const id = Math.floor(Math.random() * 100);
-    dispatch(actions.addTodo({ id: id, todo: inputRef.current.value }));
+    const id = todos.length + 1;
+    dispatch(
+      actions.addTodo({
+        id: id,
+        todo: inputRef.current.value,
+        isCompleted: false,
+        isImportant: false,
+        isArchived: false,
+      })
+    );
     inputRef.current.value = '';
+    console.log('todo added');
   };
   return (
     <div className="absolute bottom-4 w-full right-0">
