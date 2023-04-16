@@ -21,7 +21,7 @@ function FilterTodo() {
 
   const filters = [
     {
-      text: 'All',
+      text: 'all',
       count: allCount,
     },
     {

@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions, todoSelector } from '../slices/todosSlice';
+import { data } from '../Data';
 
 function AddTodo() {
   const dispatch = useDispatch();
@@ -9,19 +10,27 @@ function AddTodo() {
   const inputRef = useRef();
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const id = todos.length + 1;
+    const index = Math.floor(Math.random() * 10);
+    // dummy data for development purpose so no validation
+    const value = inputRef.current.value
+      ? inputRef.current.value
+      : data[index].todo;
+
     dispatch(
       actions.addTodo({
         id: id,
-        todo: inputRef.current.value,
+        todo: value,
         isCompleted: false,
         isImportant: false,
         isArchived: false,
       })
     );
+
     inputRef.current.value = '';
-    console.log('todo added');
   };
+
   return (
     <div className="absolute bottom-4 w-full right-0">
       <div className="bg-blue-100 border-2 border-blue-100 rounded-md shadow-blue-200 shadow-lg p-4 mx-4">
@@ -31,6 +40,7 @@ function AddTodo() {
               ref={inputRef}
               type="text"
               className="flex-grow px-4 py-1 border-1 border-blue-300 rounded-md focus:outline-none focus:ring focus:border-blue-200"
+              placeholder="Type something ..."
             />
             <button
               type="submit"

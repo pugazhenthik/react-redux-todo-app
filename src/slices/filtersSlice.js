@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { filter: 'all' };
+const initialState = { filter: 'scheduled' };
 
 const filtersSlice = createSlice({
   name: 'filters',
